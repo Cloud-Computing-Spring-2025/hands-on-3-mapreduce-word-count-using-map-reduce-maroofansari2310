@@ -17,9 +17,9 @@ public class WordMapper extends MapReduceBase implements Mapper<LongWritable, Te
 	public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter)
 			throws IOException {
 		String line = value.toString();
-		StringTokenizer tokenizer = new StringTokenizer(line);
-		while (tokenizer.hasMoreTokens()) {
-			word.set(tokenizer.nextToken());
+		StringTokenizer strTokenizer = new StringTokenizer(line);
+		while (strTokenizer.hasMoreTokens()) {
+			word.set(strTokenizer.nextToken());
 			output.collect(word, one);
 		}
 	}

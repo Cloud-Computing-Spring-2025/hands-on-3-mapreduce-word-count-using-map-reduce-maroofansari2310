@@ -15,17 +15,17 @@ import com.example.WordMapper;
 import com.example.WordReducer;
 public class Controller {
     public static void main(String[] args) throws IOException{
-        JobConf conf = new JobConf(Controller.class);
-        conf.setJobName("WordCount");
-        conf.setOutputKeyClass(Text.class);
-        conf.setOutputValueClass(IntWritable.class);
-        conf.setMapperClass(WordMapper.class);
-        conf.setCombinerClass(WordReducer.class);
-        conf.setReducerClass(WordReducer.class);
-        conf.setInputFormat(TextInputFormat.class);
-        conf.setOutputFormat(TextOutputFormat.class);
-        FileInputFormat.setInputPaths(conf,new Path(args[0]));
-        FileOutputFormat.setOutputPath(conf,new Path(args[1]));
-        JobClient.runJob(conf);
+        JobConf config = new JobConf(Controller.class);
+        config.setJobName("WordCount");
+        config.setOutputKeyClass(Text.class);
+        config.setOutputValueClass(IntWritable.class);
+        config.setMapperClass(WordMapper.class);
+        config.setCombinerClass(WordReducer.class);
+        config.setReducerClass(WordReducer.class);
+        config.setInputFormat(TextInputFormat.class);
+        config.setOutputFormat(TextOutputFormat.class);
+        FileInputFormat.setInputPaths(config,new Path(args[0]));
+        FileOutputFormat.setOutputPath(config,new Path(args[1]));
+        JobClient.runJob(config);
     }
 }

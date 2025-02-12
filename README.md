@@ -1,17 +1,14 @@
-
 # WordCount-Using-MapReduce-Hadoop
 
-This repository is designed to test MapReduce jobs using a simple word count dataset.
+## Project Overview
+This project develops a Word Count program using Hadoop MapReduce in Java. It processes a text dataset, counts word occurrences, and produces the results. The application is built with Maven and designed for execution on a Hadoop cluster.
 
-## Objectives
+## Approach and Implementation
+- **Mapper (WordMapper.java):**
+  - Reads and tokenizes text, emitting (word, 1) pairs for each valid word.
 
-By completing this activity, students will:
-
-1. **Understand Hadoop's Architecture:** Learn how Hadoop's distributed file system (HDFS) and MapReduce framework work together to process large datasets.
-2. **Build and Deploy a MapReduce Job:** Gain experience in compiling a Java MapReduce program, deploying it to a Hadoop cluster, and running it using Docker.
-3. **Interact with Hadoop Ecosystem:** Practice using Hadoop commands to manage HDFS and execute MapReduce jobs.
-4. **Work with Docker Containers:** Understand how to use Docker to run and manage Hadoop components and transfer files between the host and container environments.
-5. **Analyze MapReduce Job Outputs:** Learn how to retrieve and interpret the results of a MapReduce job.
+- **Reducer (WordReducer.java):**
+  - Aggregates word counts by summing occurrences and outputs (word, count) pairs.
 
 ## Setup and Execution
 
@@ -36,7 +33,7 @@ mvn install
 Move the generated JAR file to a shared folder for easy access:
 
 ```bash
-mv target/*.jar shared-folder/input/code/
+mv target/*.jar shared-folder/input/data/
 ```
 
 ### 4. **Copy JAR to Docker Container**
@@ -44,7 +41,7 @@ mv target/*.jar shared-folder/input/code/
 Copy the JAR file to the Hadoop ResourceManager container:
 
 ```bash
-docker cp shared-folder/input/code/<your-jar-file>.jar resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
+docker cp /workspaces/hands-on-3-mapreduce-word-count-using-map-reduce-maroofansari2310/shared-folder/input/data/WordCountUsingHadoop-0.0.1-SNAPSHOT.jar resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
 ```
 
 ### 5. **Move Dataset to Docker Container**
@@ -88,7 +85,7 @@ hadoop fs -put ./input.txt /input/dataset
 Run your MapReduce job using the following command:
 
 ```bash
-hadoop jar /opt/hadoop-3.2.1/share/hadoop/mapreduce/<your-jar-file>.jar com.example.controller.Controller /input/dataset/input.txt /output
+hadoop jar WordCountUsingHadoop-0.0.1-SNAPSHOT.jar com.example.controller.Controller /input/dataset/input.txt /output
 ```
 
 ### 9. **View the Output**
@@ -115,4 +112,22 @@ To copy the output from HDFS to your local machine:
     ```bash
     docker cp resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/output/ shared-folder/output/
     ```
-3. Commit and push to your repo so that we can able to see your output
+## Challenges faced
+    Path issue: Solved by putting the correct path for the input file.
+
+## Sample Input
+    Hello world
+    Hello Hadoop
+    Hadoop is powerful
+    Hadoop is used for big data
+
+## Sample Output
+    Hadoop 3
+    Hello 2
+    is 2
+    used 1
+    for 1
+    big 1
+    data 1
+    powerful 1
+    world 1
